@@ -1,0 +1,6 @@
+{
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    // insert spaces when pressing tab
+    "editor.insertSpaces": true
+}
