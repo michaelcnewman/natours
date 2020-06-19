@@ -15,6 +15,7 @@ const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const bookingRouter = require('./routes/bookingRoutes');
+const bookingController = require('./controllers/bookingController');
 const viewRouter = require('./routes/viewRoutes');
 const globalErrorHandler = require('./controllers/errorController');
 
@@ -51,6 +52,13 @@ const limiter = rateLimit({
     windowMS: 60 * 60 * 1000,
     message: 'Too many request from this IP.',
 });
+
+//Implement Webhook for stripe <--- need here beccause need to use it before body parsing to JSON
+app.post(
+    '/webhook-checkout',
+    express.raw({ type: 'application/json' }),
+    bookingController.webhookCheckout
+);
 
 app.use('/api', limiter);
 
