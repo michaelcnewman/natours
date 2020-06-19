@@ -8,6 +8,8 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
+const cors = require('cors');
+
 const AppError = require('./utils/appError');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
@@ -24,6 +26,14 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
 // 1.) GLOBAL MIDDLEWARES
+//Implement Cross Origin Resource Sharing CORS
+app.use(cors()); // allows cors for all routes, can use as middle wear in any route
+//If on same domain but different subdomain  e.g. api.natours.com vs. natours.com use below
+// app.use(cors({origin: 'https://www.natours.com'}))
+
+//Allow CORS for more complicated requests
+app.options('*', cors());
+
 // Servnig static files
 app.use(express.static(path.join(__dirname, 'public')));
 
